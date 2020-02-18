@@ -1,0 +1,111 @@
+<% flash.each do |type, msg| %>
+    <% if type == "error" %>
+        <div class="alert alert-danger"><%= msg %> </div>
+    <% elsif type == "success" %>
+        <div class= "alert alert-success"><%= msg %> </div>
+    <% elsif type == "info" %>
+        <div class= "alert alert-danger"><%= msg %> </div>
+    <% end %>
+<% end %>
+
+<div class = "mt-4 ml-3">
+  <h4>Import data</h4>
+  <%= form_tag admin_csv_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import from file", :class => 'btn btn-dark'%>
+  <% end %> <br>
+  <%= form_tag admin_empty_db_path,data: {confirm: "Are you sure bout that"}, method:'delete' do %>
+    <%= submit_tag "empty DB", :class => 'btn btn-danger' %>
+  <% end %>
+</div>
+
+<div class="container">
+	<div class="row">
+    	<div class="col-3, card">
+    <%= form_with scope: :employee, url:  admin_csv_change_path,  local: true do |form| %>
+        <p>
+          <h2> name </h2>
+          <%= form.text_field :name  %>
+        </p>
+        <p>
+          <h2> email </h2>
+          <%= form.text_field :email  %>
+        </p>
+        <p>
+          <h3> gender </h3>
+          <%= form.text_area :sex %>
+        </p>
+        <p>
+          <h3> paired_with </h3>
+          <%= form.text_area :paired_with %>
+        </p>
+        <p>
+          <h3> department </h3>
+          <%= form.text_area :department %>
+        </p>
+        <br>
+        <p>
+          <%= form.submit "change", :class => "btn, btn-primary"%>
+        </p>
+    <% end %>
+		</div>
+
+		<div class="col-3, card">
+    <%= form_with scope: :employee, url:  admin_csv_update_path,  local: true do |form| %>
+        <p>
+          <h2> name </h2>
+          <%= form.text_field :name  %>
+        </p>
+        <p>
+          <h2> email </h2>
+          <%= form.text_field :email  %>
+        </p>
+
+        <p>
+          <h3> gender </h3>
+          <%= form.text_area :sex %>
+        </p>
+        <p>
+          <h3> department </h3>
+          <%= form.text_area :department %>
+        </p>
+        <br>
+        <p>
+          <%= form.submit "update", :class => "btn, btn-primary"%>
+        </p>
+    <% end %>
+		</div>
+		<div class="col-9">
+			  <table class = "table">
+    <thead class="thead-dark">
+      <tr>
+      <th scope="row">SN</th>
+        <th scope="col">name</th>
+        <th scope="col">email</th>
+        <th scope="col">sex</th>
+        <th scope="col">department</th>
+        <th scope="col">paired with</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% n = 1 %>
+      <% @employees.each do |employee| %>
+        <tr>
+          <th scope="row"><%= n %></th>
+          <td><%= employee.name %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.sex %></td>
+          <td><%= employee.department %></td>
+          <% if  employee.paired_with == 0%>
+            <td>none</td>
+          <% else %>
+            <td><%= Employee.find(employee.paired_with).name %></td>
+          <% end %>
+        </tr>
+        <% n +=1 %>
+      <% end %>
+    </tbody>
+  </table>
+		</div>
+	</div>
+</div>

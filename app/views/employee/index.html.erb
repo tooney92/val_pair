@@ -1,0 +1,49 @@
+<!-- <% flash.each do |type, msg| %>
+<% if type == "error" %>
+    <div class="alert alert-danger" style = "color: red;"><%= msg %> </div>
+<% elsif type == "success" %>
+    <div class= "alert alert-success" style = "color:green;"><%= msg %> </div>
+<% elsif type == "info" %>
+    <div class= "alert alert-danger"><%= msg %> </div>
+<% end %>
+<% end %> -->
+<div id="background"></div>
+
+    <div class="container" id="container">   
+      <div class="form-container sign-in-container">
+        <%# <form action="#"> %>
+        <%= form_with scope: :employee, url: employee_path, local: true do |form| %>
+          <h1>Season of Love</h1>
+          
+          <%# <input type="email" placeholder="Email" /> %>
+          <%= form.text_field :email, placeholder: 'Email', id: 'mail' %>
+            <% flash.each do |type, msg| %>
+                    <% if type == "error" %>
+                        <div class="alert alert-danger" style = "color: red;"><%= msg %> </div>
+                    <% elsif type == "success" %>
+                        <div class= "alert alert-success" style = "color:green;"><%= msg %> </div>
+                    <% elsif type == "info" %>
+                        <div class= "alert alert-danger"><%= msg %> </div>
+                    <% end %>
+            <% end %>
+          <button class=" button">Find Your Val</button>
+        <% end %>
+
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-right">
+            <div id="chest">
+              <div class="heart left side top"></div>
+              <div class="heart center">&hearts;ddd</div>
+              <div class="text">
+                <br />
+
+                <br />
+              </div>
+              <div class="heart right side"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
